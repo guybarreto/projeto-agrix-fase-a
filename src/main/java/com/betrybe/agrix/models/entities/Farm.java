@@ -16,6 +16,9 @@ public class Farm {
 
   private Double size;
 
+  public Farm() {
+  }
+
   public Farm(Long id, String name, Double size) {
     this.id = id;
     this.name = name;
