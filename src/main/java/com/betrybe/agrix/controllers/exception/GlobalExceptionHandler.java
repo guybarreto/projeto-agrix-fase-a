@@ -12,4 +12,10 @@ public class GlobalExceptionHandler {
   public ResponseEntity<String> handleFarmNotFoundException(FarmNotFoundException exception) {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
   }
+
+  @ExceptionHandler(CropNotFoundException.class)
+  public ResponseEntity<String> handleCropNotFoundException(CropNotFoundException exception) {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+  }
+
 }

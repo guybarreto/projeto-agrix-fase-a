@@ -20,6 +20,13 @@ public class CropController {
     this.cropService = cropService;
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<CropDTO> getCropById(@PathVariable Long id) {
+    Crop crop = cropService.getCropById(id);
+    CropDTO cropDTO = CropDTO.cropToCropDTO(crop);
+    return ResponseEntity.status(HttpStatus.OK).body(cropDTO);
+  }
+
   @GetMapping()
   public ResponseEntity<List<CropDTO>> getAllCrops() {
     List<Crop> crops = cropService.getAllCrops();
