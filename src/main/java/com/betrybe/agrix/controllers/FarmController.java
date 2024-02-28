@@ -22,9 +22,10 @@ public class FarmController {
   }
 
   @PostMapping
-  public ResponseEntity<Farm> createFarm(@RequestBody FarmDTO farmDTO) {
-    Farm newFarm = farmService.createFarm(farmDTO.toFarm());
-    return ResponseEntity.status(HttpStatus.CREATED).body(newFarm);
+  public ResponseEntity<FarmDTO> createFarm(@RequestBody Farm farm) {
+    Farm newFarm = farmService.createFarm(farm);
+    FarmDTO newFarmDTO = FarmDTO.farmToFarmDTO(newFarm);
+    return ResponseEntity.status(HttpStatus.CREATED).body(newFarmDTO);
   }
 
   @GetMapping
@@ -32,7 +33,7 @@ public class FarmController {
     List<Farm> farms = farmService.getAllFarms();
 
     List<FarmDTO> farmDTOList = farms.stream()
-        .map(farm -> new FarmDTO(farm.getId(), farm.getName(), farm.getSize()))
+        .map(FarmDTO::farmToFarmDTO)
         .toList();
 
     return ResponseEntity.status(HttpStatus.OK).body(farmDTOList);
@@ -41,7 +42,7 @@ public class FarmController {
   @GetMapping("/{id}")
   public ResponseEntity<FarmDTO> getFarmById(@PathVariable Long id) {
     Farm farm = farmService.getFarmById(id);
-    FarmDTO farmDTO = new FarmDTO(farm.getId(), farm.getName(), farm.getSize());
+    FarmDTO farmDTO = FarmDTO.farmToFarmDTO(farm);
     return ResponseEntity.status(HttpStatus.OK).body(farmDTO);
   }
 }
