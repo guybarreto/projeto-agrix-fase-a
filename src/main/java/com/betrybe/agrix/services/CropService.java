@@ -31,4 +31,8 @@ public class CropService {
     Farm farm = farmService.getFarmById(farmId);
     return farm.getCrops();
   }
+
+  public List<Crop> getAllCrops() {
+    return cropRepository.findAll();
+  }
 }

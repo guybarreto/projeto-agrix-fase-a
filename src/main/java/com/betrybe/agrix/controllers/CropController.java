@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/farms/{farmId}/crops")
+@RequestMapping("/crops")
 public class CropController {
 
   private final CropService cropService;
@@ -20,19 +20,9 @@ public class CropController {
     this.cropService = cropService;
   }
 
-  @PostMapping
-  public ResponseEntity<CropDTO> createCrop(
-      @PathVariable Long farmId,
-      @RequestBody Crop crop
-  ) {
-    Crop newCrop = cropService.createCrop(farmId, crop);
-    CropDTO newCropDTO = CropDTO.cropToCropDTO(newCrop);
-    return ResponseEntity.status(HttpStatus.CREATED).body(newCropDTO);
-  }
-
-  @GetMapping
-  public ResponseEntity<List<CropDTO>> getAllCropsByFarmId(@PathVariable Long farmId) {
-    List<Crop> crops = cropService.getAllCropsByFarmId(farmId);
+  @GetMapping()
+  public ResponseEntity<List<CropDTO>> getAllCrops() {
+    List<Crop> crops = cropService.getAllCrops();
 
     List<CropDTO> cropDTOList = crops.stream()
         .map(CropDTO::cropToCropDTO)
